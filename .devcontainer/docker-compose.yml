@@ -18,6 +18,5 @@ services:
       # Git config
       - ~/.gitconfig:/root/.gitconfig
     environment:
-      - TZ=
+      - TZ=Germany/Berlin # Make sure to set your timezone, e.g., TZ=America/New_York
     entrypoint: ["zsh", "-c", "while sleep 1000; do :; done"]
- 
