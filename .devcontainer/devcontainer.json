@@ -11,9 +11,8 @@
     "workspaceFolder": "/workspace",
     "postCreateCommand": "fc-cache -fv && echo 'Dev container setup complete!'",
     "mounts": [
-        "type=bind,source=/mnt/c,target=/mnt/c",
-        "type=bind,source=/home/nano/.ssh,target=/root/.ssh",
-        "type=bind,source=/home/nano/.gitconfig,target=/root/.gitconfig"
+        "source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind,consistency=cached",
+        "source=${localEnv:HOME}/.gitconfig,target=/root/.gitconfig,type=bind,consistency=cached"
     ],
     "customizations": {
         "vscode": {
