@@ -9,7 +9,12 @@
     ],
     "shutdownAction": "stopCompose",
     "workspaceFolder": "/workspace",
-    "postCreateCommand": "",
+    "postCreateCommand": "fc-cache -fv && echo 'Dev container setup complete!'",
+    "mounts": [
+        "type=bind,source=/mnt/c,target=/mnt/c",
+        "type=bind,source=/home/nano/.ssh,target=/root/.ssh",
+        "type=bind,source=/home/nano/.gitconfig,target=/root/.gitconfig"
+    ],
     "customizations": {
         "vscode": {
             "extensions": [
@@ -33,12 +38,56 @@
                 "latex-workshop.linting.chktex.exec.path": "chktex",
                 "latex-workshop.latex.clean.subfolder.enabled": true,
                 "latex-workshop.latex.autoClean.run": "onBuilt",
+                "latex-workshop.latex.recipe.default": "xelatex",
+                "latex-workshop.latex.tools": [
+                    {
+                        "name": "xelatexmk",
+                        "command": "latexmk",
+                        "args": [
+                            "-synctex=1",
+                            "-interaction=nonstopmode",
+                            "-file-line-error",
+                            "-xelatex",
+                            "-f",
+                            "-outdir=%OUTDIR%",
+                            "%DOC%"
+                        ],
+                        "env": {}
+                    },
+                    {
+                        "name": "xelatex_twice",
+                        "command": "xelatex",
+                        "args": [
+                            "-synctex=1",
+                            "-interaction=nonstopmode",
+                            "-file-line-error",
+                            "-output-directory=%OUTDIR%",
+                            "%DOC%"
+                        ],
+                        "env": {}
+                    }
+                ],
+                "latex-workshop.latex.recipes": [
+                    {
+                        "name": "xelatex",
+                        "tools": [
+                            "xelatexmk"
+                        ]
+                    },
+                    {
+                        "name": "xelatex (twice)",
+                        "tools": [
+                            "xelatex_twice",
+                            "xelatex_twice"
+                        ]
+                    }
+                ],
                 "editor.formatOnSave": true,
                 "files.associations": {
                     "*.tex": "latex"
                 },
-                "latex-workshop.latexindent.path": "latexindent",
-                "latex-workshop.latexindent.args": [
+                "latex-workshop.formatting.latexindent.path": "latexindent",
+                "latex-workshop.formatting.latexindent.args": [
                     "-c",
                     "%DIR%/",
                     "%TMPFILE%",
